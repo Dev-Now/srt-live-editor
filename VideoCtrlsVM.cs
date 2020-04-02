@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace VideoControlsViewModel
 {
-    class DataReqEventArgs : EventArgs
+    public class DataReqEventArgs : EventArgs
     {
         public Uri Source;
         public bool HasDuration { get; set; }
@@ -18,11 +19,79 @@ namespace VideoControlsViewModel
         public TimeSpan Position { get; set; }
     }
 
-    // This is the View Model Class
-    class VideoCtrlsVM
+    public class PlayPauseCommand : ICommand
     {
+        private VideoCtrlsVM obj;
+        public PlayPauseCommand(VideoCtrlsVM _obj)
+        {
+            obj = _obj;
+        }
+
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            obj.Play_Pause_Video();
+        }
+    }
+
+    public class ResetCommand : ICommand
+    {
+        private VideoCtrlsVM obj;
+        public ResetCommand(VideoCtrlsVM _obj)
+        {
+            obj = _obj;
+        }
+
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            obj.Reset_Video();
+        }
+    }
+
+    // This is the View Model Class
+    public class VideoCtrlsVM: INotifyPropertyChanged
+    {
+        public VideoCtrlsVM(string _szVidPath)
+        {
+            szVidPath = _szVidPath;
+            objPlayPauseCmd = new PlayPauseCommand(this);
+            objResetCmd = new ResetCommand(this);
+        }
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string szPropertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(szPropertyName));
+        }
+
+        #region Commands
+        private PlayPauseCommand objPlayPauseCmd;
+        private ResetCommand objResetCmd;
+        public ICommand PlayPauseBtnClick
+        {
+            get { return objPlayPauseCmd; }
+        }
+        public ICommand ResetBtnClick
+        {
+            get { return objResetCmd; }
+        }
+        #endregion
+
         #region Control Requests
-        public event EventHandler<DataReqEventArgs> SetSource;
         public event EventHandler<DataReqEventArgs> StopRequest;
         public event EventHandler<DataReqEventArgs> PlayRequest;
         public event EventHandler<DataReqEventArgs> PauseRequest;
@@ -35,49 +104,12 @@ namespace VideoControlsViewModel
         public event EventHandler<DataReqEventArgs> GetDuration;
         public event EventHandler<DataReqEventArgs> GetPosition;
         #endregion
-        
+
         #region Video Source
+        private string szVidPath;
         public string VideoSource
         {
-            get 
-            {
-                DataReqEventArgs eData = new DataReqEventArgs();
-                GetSource?.Invoke(this, eData);
-                return (eData.Source!=null)? eData.Source.ToString() : "invalid-file.wav"; 
-            }
-            set 
-            {
-                DataReqEventArgs eData = new DataReqEventArgs();
-                eData.Source = File.Exists(VideoSource) ? new Uri(VideoSource) : null;
-                SetSource?.Invoke(this, eData);
-                if (eData.Source!=null)
-                {
-                    PlayCtrlContent = "Play";
-                    StopRequest?.Invoke(this, eData); //vidElt.Stop();
-                    // timer
-                    DispatcherTimer timer = new DispatcherTimer();
-                    timer.Interval = TimeSpan.FromMilliseconds(10);
-                    timer.Tick += Timer_Tick;
-                    timer.Start();
-                }
-            }
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            DataReqEventArgs eData = new DataReqEventArgs();
-            GetSource?.Invoke(this, eData);
-            if (eData.Source != null)
-            {
-                HasNaturalDuration?.Invoke(this, eData);
-                if (eData.HasDuration)
-                {
-                    GetPosition?.Invoke(this, eData);
-                    //string dummy = VideoPositionLblContent;
-                    VideoPositionSldrValue = eData.Position.TotalMilliseconds;
-                    //TODO: notify page to refresh properties
-                }
-            }
+            get { return szVidPath; }
         }
         #endregion
 
@@ -96,20 +128,27 @@ namespace VideoControlsViewModel
         public string PlayCtrlContent
         {
             get { return isPlaying ? "Pause" : "Play"; }
-            set { isPlaying = PlayCtrlContent == "Pause"; }
+            set 
+            { 
+                isPlaying = value == "Pause";
+                NotifyPropertyChanged("PlayCtrlContent");
+            }
         }
 
-        //private void Play_Pause_Video()
-        //{
-        //    if (PlayCtrlContent == "Play")
-        //    {
-        //        PlayRequest?.Invoke(this, EventArgs.Empty); //vidElt.Play();
-        //    }
-        //    else
-        //    {
-        //        PauseRequest?.Invoke(this, EventArgs.Empty); //vidElt.Pause();
-        //    }
-        //}
+        public void Play_Pause_Video()
+        {
+            DataReqEventArgs eData = new DataReqEventArgs();
+            if (PlayCtrlContent == "Play")
+            {
+                PlayRequest?.Invoke(this, eData);
+                PlayCtrlContent = "Pause";
+            }
+            else
+            {
+                PauseRequest?.Invoke(this, eData);
+                PlayCtrlContent = "Play";
+            }
+        }
         #endregion
 
         #region Reset Control
@@ -121,6 +160,12 @@ namespace VideoControlsViewModel
                 GetSource?.Invoke(this, eData);
                 return eData.Source != null; 
             }
+        }
+
+        public void Reset_Video()
+        {
+            StopRequest?.Invoke(this, new DataReqEventArgs());
+            PlayCtrlContent = "Play";
         }
         #endregion
 
@@ -164,8 +209,9 @@ namespace VideoControlsViewModel
             }
             set {
                 DataReqEventArgs eData = new DataReqEventArgs();
-                eData.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(VideoPositionSldrValue)); 
+                eData.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(value)); 
                 SetPosition?.Invoke(this, eData);
+                NotifyPropertyChanged("VideoPositionSldrValue");
             }
         }
         #endregion
@@ -217,5 +263,41 @@ namespace VideoControlsViewModel
             }
         }
         #endregion
+
+        public void InitVideoCtrls()
+        {
+            DataReqEventArgs eData = new DataReqEventArgs();
+            GetSource?.Invoke(this, eData);
+            if (eData.Source != null)
+            {
+                // timer
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromMilliseconds(10);
+                timer.Tick += Timer_Tick;
+                timer.Start();
+            }           
+            NotifyPropertyChanged("VideoSpanLblContent");
+            NotifyPropertyChanged("VideoPositionSldrMax");
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            NotifyPropertyChanged("VideoPositionLblContent");
+            NotifyPropertyChanged("VideoPositionSldrValue");
+
+            //DataReqEventArgs eData = new DataReqEventArgs();
+            //GetSource?.Invoke(this, eData);
+            //if (eData.Source != null)
+            //{
+            //    HasNaturalDuration?.Invoke(this, eData);
+            //    if (eData.HasDuration)
+            //    {
+            //        GetPosition?.Invoke(this, eData);
+            //        //string dummy = VideoPositionLblContent;
+            //        VideoPositionSldrValue = eData.Position.TotalMilliseconds;
+            //        //TODO: notify page to refresh properties
+            //    }
+            //}
+        }
     }
 }

@@ -23,15 +23,12 @@ namespace TarjamatSRTEditor
     /// </summary>
     public partial class TarSRTEditorEditPage : Page
     {
-        VideoCtrlsVM vcvm = new VideoCtrlsVM();
         public TarSRTEditorEditPage(string szVidPath, string szSrtPath, string szOutpPath)
         {
             InitializeComponent();
 
-            VideoEl.Source = new Uri(szVidPath);
-
+            VideoCtrlsVM vcvm = new VideoCtrlsVM(szVidPath);
             DataContext = vcvm;
-            vcvm.SetSource          += (sender, e) => { VideoEl.Source = e.Source; };
             vcvm.StopRequest        += (sender, e) => { VideoEl.Stop(); };
             vcvm.PlayRequest        += (sender, e) => { VideoEl.Play(); };
             vcvm.PauseRequest       += (sender, e) => { VideoEl.Pause(); };
@@ -40,6 +37,7 @@ namespace TarjamatSRTEditor
             vcvm.HasNaturalDuration += (sender, e) => { e.HasDuration = VideoEl.NaturalDuration.HasTimeSpan; };
             vcvm.GetDuration        += (sender, e) => { e.Duration = VideoEl.NaturalDuration.TimeSpan; };
             vcvm.GetPosition        += (sender, e) => { e.Position = VideoEl.Position; };
+            vcvm.Reset_Video();
 
             // configure VideoEl and Subtitles text box
             //if (File.Exists(szVidPath))
@@ -63,14 +61,11 @@ namespace TarjamatSRTEditor
             //}
         }
 
-        //private void Init_Video_Position_Ctrls(object sender, RoutedEventArgs e)
-        //{
-        //    VideoPositionLbl.Content = "00:00.000";
-        //    VideoSpanLbl.Content = VideoEl.NaturalDuration.TimeSpan.ToString(@"mm\:ss\.fff");
-        //    VideoPositionSlider.Minimum = 0;
-        //    VideoPositionSlider.Maximum = (int)VideoEl.NaturalDuration.TimeSpan.TotalMilliseconds;
-        //    VideoPositionSlider.Value = 0;
-        //}
+        private void Init_Video_Position_Ctrls(object sender, RoutedEventArgs e)
+        {
+            VideoCtrlsVM vcvm = (VideoCtrlsVM)DataContext;
+            vcvm.InitVideoCtrls();
+        }
 
         //private void Timer_Tick(object sender, EventArgs e)
         //{
