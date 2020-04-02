@@ -4,10 +4,20 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TarjamatSRTEditor"
+      xmlns:cvcmns="clr-namespace:VideoControlsViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="900" d:DesignWidth="1600"
       Title="Tarjamat SRT Editor - Edit SRT file">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <cvcmns:VideoCtrlsVM x:Key="vidctrlviewobj"
+                                 VideoSource="invalid-file.wav"
+                                 PlayCtrlContent="Play"
+                                 VideoPositionSldrValue="0"></cvcmns:VideoCtrlsVM>
+        </ResourceDictionary>
+    </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -22,22 +32,28 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!--video section-->
+                      <!--MediaOpened="Init_Video_Position_Ctrls" MediaEnded="Reset_Video"-->
         <MediaElement x:Name="VideoEl" LoadedBehavior="Manual"
                       Width="700" Height="400"
                       VerticalAlignment="Bottom"
                       Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" 
-                      MediaOpened="Init_Video_Position_Ctrls" MediaEnded="Reset_Video"></MediaElement>
+                      ></MediaElement>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="Black" Foreground="White"
                VerticalAlignment="Bottom"
                Margin="0,0,0,5"
                Height="30" Width="100">current subtitle...</Label>
         <!-- video controls -->
+                <!--Click="Play_Pause_Video"-->
         <Button Grid.Column="0" Grid.Row="1" Name="PlayCtrl"
-                Click="Play_Pause_Video">Play/Pause</Button>
+                >Play/Pause</Button>
+                <!--Click="Reset_Video"-->
         <Button Grid.Column="1" Grid.Row="1" Name="ResetCtrl"
-                Click="Reset_Video">Reset</Button>
+                >Reset</Button>
         <Label Grid.Column="2" Grid.Row="1" Name="VideoPositionLbl">00:00.000</Label>
-        <Slider Grid.Column="3" Grid.Row="1" Width="500" Name="VideoPositionSlider"></Slider>
+                <!--ValueChanged="Set_Video_Position"-->
+        <Slider Grid.Column="3" Grid.Row="1" Width="500" Name="VideoPositionSlider"
+                Minimum="0"
+                ></Slider>
         <Label Grid.Column="4" Grid.Row="1" Name="VideoSpanLbl">00:00.000</Label>
         <!-- subtitles panel -->
         <TextBox Grid.Column="5" Grid.Row="0">Subtitles go here...</TextBox>

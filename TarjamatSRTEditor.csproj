@@ -62,6 +62,7 @@
     <Compile Include="TarSRTEditorHome.xaml.cs">
       <DependentUpon>TarSRTEditorHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VideoCtrlsVM.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
