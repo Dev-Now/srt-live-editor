@@ -38,27 +38,6 @@ namespace TarjamatSRTEditor
             vcvm.GetDuration        += (sender, e) => { e.Duration = VideoEl.NaturalDuration.TimeSpan; };
             vcvm.GetPosition        += (sender, e) => { e.Position = VideoEl.Position; };
             vcvm.Reset_Video();
-
-            // configure VideoEl and Subtitles text box
-            //if (File.Exists(szVidPath))
-            //{
-            //    VideoEl.Source = new Uri(szVidPath);
-            //    PlayCtrl.Content = "Play";
-            //    VideoEl.Stop();
-            //    // timer
-            //    DispatcherTimer timer = new DispatcherTimer();
-            //    timer.Interval = TimeSpan.FromMilliseconds(10);
-            //    timer.Tick += Timer_Tick;
-            //    timer.Start();
-            //}
-            //else
-            //{
-            //    PlayCtrl.IsEnabled = false;
-            //    ResetCtrl.IsEnabled = false;
-            //    VideoPositionLbl.Content = "00:00.000";
-            //    VideoPositionSlider.IsEnabled = false;
-            //    VideoSpanLbl.Content = "00:00.000";
-            //}
         }
 
         private void Init_Video_Position_Ctrls(object sender, RoutedEventArgs e)
@@ -67,46 +46,10 @@ namespace TarjamatSRTEditor
             vcvm.InitVideoCtrls();
         }
 
-        //private void Timer_Tick(object sender, EventArgs e)
-        //{
-        //    if (VideoEl.Source != null)
-        //    {
-        //        if (VideoEl.NaturalDuration.HasTimeSpan)
-        //        {
-        //            VideoPositionLbl.Content = VideoEl.Position.ToString(@"mm\:ss\.fff");
-        //            VideoPositionSlider.Value = (int)VideoEl.Position.TotalMilliseconds;
-        //        }
-        //    }
-        //}
-
-        //private void Play_Pause_Video(object sender, RoutedEventArgs e)
-        //{
-        //    if (PlayCtrl.Content.ToString() == "Play")
-        //    {
-        //        VideoEl.Play();
-        //        PlayCtrl.Content = "Pause";
-        //    }
-        //    else
-        //    {
-        //        VideoEl.Pause();
-        //        PlayCtrl.Content = "Play";
-        //    }
-        //}
-
-        //private void Reset_Video(object sender, RoutedEventArgs e)
-        //{
-        //    VideoEl.Stop();
-        //    PlayCtrl.Content = "Play";
-        //}
-
-        //private void Set_Video_Position(object sender, RoutedEventArgs e)
-        //{
-        //    Slider sldr = (Slider)sender;
-        //    if (sldr.IsFocused || sldr.IsMouseOver)
-        //    {
-        //        TimeSpan tsNewPos = new TimeSpan(0,0,0,0,(int)((Slider)sender).Value);
-        //        VideoEl.Position = tsNewPos;
-        //    }
-        //}
+        private void Reset_Video(object sender, RoutedEventArgs e)
+        {
+            VideoCtrlsVM vcvm = (VideoCtrlsVM)DataContext;
+            vcvm.Reset_Video();
+        }
     }
 }

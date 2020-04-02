@@ -66,7 +66,7 @@ namespace VideoControlsViewModel
     {
         public VideoCtrlsVM(string _szVidPath)
         {
-            szVidPath = _szVidPath;
+            VideoSource = File.Exists(_szVidPath)? _szVidPath: null;
             objPlayPauseCmd = new PlayPauseCommand(this);
             objResetCmd = new ResetCommand(this);
         }
@@ -106,11 +106,7 @@ namespace VideoControlsViewModel
         #endregion
 
         #region Video Source
-        private string szVidPath;
-        public string VideoSource
-        {
-            get { return szVidPath; }
-        }
+        public string VideoSource { get; }
         #endregion
 
         #region Play Control
@@ -284,20 +280,6 @@ namespace VideoControlsViewModel
         {
             NotifyPropertyChanged("VideoPositionLblContent");
             NotifyPropertyChanged("VideoPositionSldrValue");
-
-            //DataReqEventArgs eData = new DataReqEventArgs();
-            //GetSource?.Invoke(this, eData);
-            //if (eData.Source != null)
-            //{
-            //    HasNaturalDuration?.Invoke(this, eData);
-            //    if (eData.HasDuration)
-            //    {
-            //        GetPosition?.Invoke(this, eData);
-            //        //string dummy = VideoPositionLblContent;
-            //        VideoPositionSldrValue = eData.Position.TotalMilliseconds;
-            //        //TODO: notify page to refresh properties
-            //    }
-            //}
         }
     }
 }
