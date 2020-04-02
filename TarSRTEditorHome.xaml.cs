@@ -29,10 +29,6 @@ namespace TarjamatSRTEditor
         private string szSrtPath;
         private string szOutpPath;
 
-        //public string szVideoFile { get { return szVidPath; } }
-        //public string szSrtFile { get { return szSrtPath; } }
-        //public string szOutpFile { get { return szOutpPath; } }
-
         private void Browse_Dialog(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
