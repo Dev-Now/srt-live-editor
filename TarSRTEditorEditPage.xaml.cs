@@ -37,19 +37,26 @@ namespace TarjamatSRTEditor
             vcvm.HasNaturalDuration += (sender, e) => { e.HasDuration = VideoEl.NaturalDuration.HasTimeSpan; };
             vcvm.GetDuration        += (sender, e) => { e.Duration = VideoEl.NaturalDuration.TimeSpan; };
             vcvm.GetPosition        += (sender, e) => { e.Position = VideoEl.Position; };
-            vcvm.Reset_Video();
+            vcvm.Load_Video();
         }
 
         private void Init_Video_Position_Ctrls(object sender, RoutedEventArgs e)
         {
             VideoCtrlsVM vcvm = (VideoCtrlsVM)DataContext;
             vcvm.InitVideoCtrls();
+            vcvm.Reset_Video();
         }
 
         private void Reset_Video(object sender, RoutedEventArgs e)
         {
             VideoCtrlsVM vcvm = (VideoCtrlsVM)DataContext;
             vcvm.Reset_Video();
+        }
+
+        private void VideoEl_TogglePositionUpdate(object sender, RoutedEventArgs e)
+        {
+            VideoCtrlsVM vcvm = (VideoCtrlsVM)DataContext;
+            vcvm.Toggle_Video_Position_Update();
         }
     }
 }

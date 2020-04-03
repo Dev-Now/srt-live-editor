@@ -199,15 +199,16 @@ namespace VideoControlsViewModel
         {
             get 
             {
+                if (!bUpdateVidPos) { return dSaveVidPos; }
                 DataReqEventArgs eData = new DataReqEventArgs();
                 GetPosition?.Invoke(this, eData);
                 return eData.Position.TotalMilliseconds; 
             }
             set {
                 DataReqEventArgs eData = new DataReqEventArgs();
-                eData.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(value)); 
-                SetPosition?.Invoke(this, eData);
-                NotifyPropertyChanged("VideoPositionSldrValue");
+                eData.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(value));
+                if (!bUpdateVidPos) { dSaveVidPos = eData.Position.TotalMilliseconds; }
+                else { SetPosition?.Invoke(this, eData); }
             }
         }
         #endregion
@@ -260,6 +261,13 @@ namespace VideoControlsViewModel
         }
         #endregion
 
+        public void Load_Video()
+        {
+            // a request to play is used to make the video load, (couldn't find better...)
+            // then upon MediaOpened event, request a Stop!
+            PlayRequest?.Invoke(this, new DataReqEventArgs());
+        }
+
         public void InitVideoCtrls()
         {
             DataReqEventArgs eData = new DataReqEventArgs();
@@ -278,8 +286,24 @@ namespace VideoControlsViewModel
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            NotifyPropertyChanged("VideoPositionLblContent");
-            NotifyPropertyChanged("VideoPositionSldrValue");
+            if (bUpdateVidPos)
+            {
+                NotifyPropertyChanged("VideoPositionLblContent");
+                NotifyPropertyChanged("VideoPositionSldrValue");
+            }
+        }
+
+        private bool bUpdateVidPos = true;
+        private double dSaveVidPos = 0.0;
+        public void Toggle_Video_Position_Update()
+        {
+            bUpdateVidPos = !bUpdateVidPos;
+            if (bUpdateVidPos)
+            {
+                DataReqEventArgs eData = new DataReqEventArgs();
+                eData.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(dSaveVidPos));
+                SetPosition?.Invoke(this, eData);
+            }
         }
     }
 }

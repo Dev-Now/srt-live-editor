@@ -50,6 +50,7 @@
                 Minimum="0" Maximum="{Binding VideoPositionSldrMax, Mode=OneWay}" 
                 IsEnabled="{Binding VideoPositionSldrEnabled, Mode=OneWay}" 
                 Value="{Binding VideoPositionSldrValue}"
+                Thumb.DragStarted="VideoEl_TogglePositionUpdate" Thumb.DragCompleted="VideoEl_TogglePositionUpdate"
                 ></Slider>
         <Label Grid.Column="4" Grid.Row="1" x:Name="VideoSpanLbl" 
                Content="{Binding VideoSpanLblContent, Mode=OneWay}"/>
