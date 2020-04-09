@@ -11,13 +11,7 @@ namespace TarjamatSRTEditor.SubtitlingModels
         public SubtitleList DeepCopy()
         {
             SubtitleList sblCopy = new SubtitleList();
-            foreach (Subtitle sub in this)
-            {
-                Subtitle subCopy = new Subtitle();
-                subCopy.Index = sub.Index;
-                subCopy.Text = String.Copy(sub.Text);
-                subCopy.StartTime = new TimeSpan(sub.StartTime.Ticks);
-            }
+            foreach (Subtitle sub in this) { sblCopy.Add(sub.DeepCopy()); }
             return sblCopy;
         }
     }

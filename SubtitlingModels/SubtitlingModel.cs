@@ -19,7 +19,13 @@ namespace TarjamatSRTEditor.SubtitlingModels
             szOrigSrtFilePath = _szOrigSrt;
             szOutpSrtFilePath = _szOutpSrt;
             sblOrigSubtitles = new SubtitleList();
-            // todo: extract subtitles from original srt file and add them to sblOrigSubtitles
+            SrtFileParser srtParser = new SrtFileParser(_szOrigSrt);
+            Subtitle subNext = srtParser.GetNextSubtitle();
+            while (subNext != null)
+            {
+                sblOrigSubtitles.Add(subNext);
+                subNext = srtParser.GetNextSubtitle();
+            }
             sblOutpSubtitles = sblOrigSubtitles.DeepCopy();
         }
     }
