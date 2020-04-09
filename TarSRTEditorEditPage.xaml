@@ -13,8 +13,6 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -25,21 +23,32 @@
         <MediaElement x:Name="VideoEl" LoadedBehavior="Manual"
                       Width="700" Height="400"
                       VerticalAlignment="Bottom"
-                      Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" 
+                      Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" 
                       Source="{Binding VideoCtrlsVM.VideoSource}" 
                       MediaOpened="Init_Video_Position_Ctrls" MediaEnded="Reset_Video"
                       ></MediaElement>
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="Black" Foreground="White"
-               VerticalAlignment="Bottom"
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent"
+               Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
                Margin="0,0,0,5"
-               FontFamily="Traditional Arabic" FontSize="18"
-               FlowDirection="RightToLeft"
-               
-               Height="60" Width="300"
-               HorizontalContentAlignment="Center"
-               Content="{Binding SubtitlingVM.SubtitleLblContent, Mode=OneWay}"
-               Visibility="{Binding SubtitlingVM.SubtitleLblVisible, Mode=OneWay}"
-               />
+               VerticalAlignment="Bottom"
+               HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+               >
+            <Grid Margin="-5,-5,-5,-5">
+                <Label Background="Black" Opacity="0.6"
+                       Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
+                       Visibility="{Binding SubtitlingVM.SubtitleLblVisible, Mode=OneWay}"
+                       />
+                <Label Background="Transparent" Foreground="White" Opacity="1"
+                       FontFamily="Amiri" FontSize="18"
+                       FlowDirection="RightToLeft"
+                       TextBlock.TextAlignment="Center"
+                       Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
+                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                       Content="{Binding SubtitlingVM.SubtitleLblContent, Mode=OneWay}"
+                       Visibility="{Binding SubtitlingVM.SubtitleLblVisible, Mode=OneWay}"
+                       />
+            </Grid>
+        </Label>
         <!-- video controls -->
         <Button Grid.Column="0" Grid.Row="1" x:Name="PlayCtrl"
                 Content="{Binding VideoCtrlsVM.PlayCtrlContent}" 
@@ -50,18 +59,26 @@
                 IsEnabled="{Binding VideoCtrlsVM.ResetCtrlEnabled, Mode=OneWay}" 
                 Command="{Binding VideoCtrlsVM.ResetBtnClick, Mode=OneWay}"
                 >Reset</Button>
-        <Label Grid.Column="2" Grid.Row="1" x:Name="VideoPositionLbl" 
-               Content="{Binding VideoCtrlsVM.VideoPositionLblContent, Mode=OneWay}"/>
-        <Slider Grid.Column="3" Grid.Row="1" Width="500" Name="VideoPositionSlider"
-                IsMoveToPointEnabled="True"
-                Minimum="0" Maximum="{Binding VideoCtrlsVM.VideoPositionSldrMax, Mode=OneWay}" 
-                IsEnabled="{Binding VideoCtrlsVM.VideoPositionSldrEnabled, Mode=OneWay}" 
-                Value="{Binding VideoCtrlsVM.VideoPositionSldrValue}"
-                Thumb.DragStarted="VideoEl_TogglePositionUpdate" Thumb.DragCompleted="VideoEl_TogglePositionUpdate"
-                ></Slider>
-        <Label Grid.Column="4" Grid.Row="1" x:Name="VideoSpanLbl" 
-               Content="{Binding VideoCtrlsVM.VideoSpanLblContent, Mode=OneWay}"/>
+        <Grid Grid.Column="2" Grid.Row="1" Background="AntiqueWhite">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" x:Name="VideoPositionLbl"
+                   Content="{Binding VideoCtrlsVM.VideoPositionLblContent, Mode=OneWay}"/>
+            <Slider Grid.Column="1" Width="500" Name="VideoPositionSlider"
+                    VerticalAlignment="Center"
+                    IsMoveToPointEnabled="True"
+                    Minimum="0" Maximum="{Binding VideoCtrlsVM.VideoPositionSldrMax, Mode=OneWay}" 
+                    IsEnabled="{Binding VideoCtrlsVM.VideoPositionSldrEnabled, Mode=OneWay}" 
+                    Value="{Binding VideoCtrlsVM.VideoPositionSldrValue}"
+                    Thumb.DragStarted="VideoEl_TogglePositionUpdate" Thumb.DragCompleted="VideoEl_TogglePositionUpdate"
+                    ></Slider>
+            <Label Grid.Column="2" x:Name="VideoSpanLbl"
+                   Content="{Binding VideoCtrlsVM.VideoSpanLblContent, Mode=OneWay}"/>
+        </Grid>
         <!-- subtitles panel -->
-        <TextBox Grid.Column="5" Grid.Row="0">Subtitles go here...</TextBox>
+        <TextBox Grid.Column="3" Grid.Row="0">Subtitles go here...</TextBox>
     </Grid>
 </Page>

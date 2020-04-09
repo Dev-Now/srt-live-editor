@@ -29,12 +29,16 @@ namespace SubtitlingViewModel
         }
 
         #region Subtitle Label
+        private string _szCurrentSubtitle = "";
+        private float _fLineHeight = 41f;
+        private float _fLineWidth = 6.5f;
         public string SubtitleLblContent
         {
             get
             {
                 TimeSpan tsVidCurrPos = _vidvm.GetCurrentVideoPosition();
-                return _subm.GetSubtitleAt(tsVidCurrPos);
+                _szCurrentSubtitle = _subm.GetSubtitleAt(tsVidCurrPos);
+                return _szCurrentSubtitle;
             }
         }
 
@@ -42,8 +46,23 @@ namespace SubtitlingViewModel
         {
             get
             {
-                TimeSpan tsVidCurrPos = _vidvm.GetCurrentVideoPosition();
-                return _subm.IsThereSubtitleAt(tsVidCurrPos)? "Visible" : "Hidden";
+                return _szCurrentSubtitle != ""? "Visible" : "Hidden";
+            }
+        }
+
+        public uint SubtitleLblHeight
+        {
+            get
+            {
+                return Convert.ToUInt32(_szCurrentSubtitle.Split('\n').Count() * _fLineHeight);
+            }
+        }
+
+        public uint SubtitleLblWidth
+        {
+            get
+            {
+                return Convert.ToUInt32(_szCurrentSubtitle.Split('\n').Max(line => line.Length) * _fLineWidth);
             }
         }
         #endregion
@@ -61,6 +80,8 @@ namespace SubtitlingViewModel
         {
             NotifyPropertyChanged("SubtitleLblContent");
             NotifyPropertyChanged("SubtitleLblVisible");
+            NotifyPropertyChanged("SubtitleLblHeight");
+            NotifyPropertyChanged("SubtitleLblWidth");
         }
     }
 }
