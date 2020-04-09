@@ -26,34 +26,41 @@
                       Width="700" Height="400"
                       VerticalAlignment="Bottom"
                       Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" 
-                      Source="{Binding VideoSource}" 
+                      Source="{Binding VideoCtrlsVM.VideoSource}" 
                       MediaOpened="Init_Video_Position_Ctrls" MediaEnded="Reset_Video"
                       ></MediaElement>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="Black" Foreground="White"
                VerticalAlignment="Bottom"
                Margin="0,0,0,5"
-               Height="30" Width="100">current subtitle...</Label>
+               FontFamily="Traditional Arabic" FontSize="18"
+               FlowDirection="RightToLeft"
+               
+               Height="60" Width="300"
+               HorizontalContentAlignment="Center"
+               Content="{Binding SubtitlingVM.SubtitleLblContent, Mode=OneWay}"
+               Visibility="{Binding SubtitlingVM.SubtitleLblVisible, Mode=OneWay}"
+               />
         <!-- video controls -->
         <Button Grid.Column="0" Grid.Row="1" x:Name="PlayCtrl"
-                Content="{Binding PlayCtrlContent}" 
-                IsEnabled="{Binding PlayCtrlEnabled, Mode=OneWay}" 
-                Command="{Binding PlayPauseBtnClick, Mode=OneWay}"
+                Content="{Binding VideoCtrlsVM.PlayCtrlContent}" 
+                IsEnabled="{Binding VideoCtrlsVM.PlayCtrlEnabled, Mode=OneWay}" 
+                Command="{Binding VideoCtrlsVM.PlayPauseBtnClick, Mode=OneWay}"
                 />
         <Button Grid.Column="1" Grid.Row="1" Name="ResetCtrl" 
-                IsEnabled="{Binding ResetCtrlEnabled, Mode=OneWay}" 
-                Command="{Binding ResetBtnClick, Mode=OneWay}"
+                IsEnabled="{Binding VideoCtrlsVM.ResetCtrlEnabled, Mode=OneWay}" 
+                Command="{Binding VideoCtrlsVM.ResetBtnClick, Mode=OneWay}"
                 >Reset</Button>
         <Label Grid.Column="2" Grid.Row="1" x:Name="VideoPositionLbl" 
-               Content="{Binding VideoPositionLblContent, Mode=OneWay}"/>
+               Content="{Binding VideoCtrlsVM.VideoPositionLblContent, Mode=OneWay}"/>
         <Slider Grid.Column="3" Grid.Row="1" Width="500" Name="VideoPositionSlider"
                 IsMoveToPointEnabled="True"
-                Minimum="0" Maximum="{Binding VideoPositionSldrMax, Mode=OneWay}" 
-                IsEnabled="{Binding VideoPositionSldrEnabled, Mode=OneWay}" 
-                Value="{Binding VideoPositionSldrValue}"
+                Minimum="0" Maximum="{Binding VideoCtrlsVM.VideoPositionSldrMax, Mode=OneWay}" 
+                IsEnabled="{Binding VideoCtrlsVM.VideoPositionSldrEnabled, Mode=OneWay}" 
+                Value="{Binding VideoCtrlsVM.VideoPositionSldrValue}"
                 Thumb.DragStarted="VideoEl_TogglePositionUpdate" Thumb.DragCompleted="VideoEl_TogglePositionUpdate"
                 ></Slider>
         <Label Grid.Column="4" Grid.Row="1" x:Name="VideoSpanLbl" 
-               Content="{Binding VideoSpanLblContent, Mode=OneWay}"/>
+               Content="{Binding VideoCtrlsVM.VideoSpanLblContent, Mode=OneWay}"/>
         <!-- subtitles panel -->
         <TextBox Grid.Column="5" Grid.Row="0">Subtitles go here...</TextBox>
     </Grid>

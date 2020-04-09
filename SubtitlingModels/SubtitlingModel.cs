@@ -28,5 +28,19 @@ namespace TarjamatSRTEditor.SubtitlingModels
             }
             sblOutpSubtitles = sblOrigSubtitles.DeepCopy();
         }
+
+        public string GetSubtitleAt(TimeSpan ts)
+        {
+            foreach (Subtitle sub in sblOutpSubtitles)
+            {
+                if ((ts >= sub.StartTime) && (ts <= sub.EndTime)) return sub.Text;
+            }
+            return "";
+        }
+
+        public bool IsThereSubtitleAt(TimeSpan ts)
+        {
+            return GetSubtitleAt(ts) != "";
+        }
     }
 }

@@ -11,6 +11,7 @@ using System.ComponentModel;
 
 namespace VideoControlsViewModel
 {
+
     public class DataReqEventArgs : EventArgs
     {
         public Uri Source;
@@ -304,6 +305,13 @@ namespace VideoControlsViewModel
                 eData.Position = new TimeSpan(0, 0, 0, 0, Convert.ToInt32(dSaveVidPos));
                 SetPosition?.Invoke(this, eData);
             }
+        }
+
+        public TimeSpan GetCurrentVideoPosition()
+        {
+            DataReqEventArgs eData = new DataReqEventArgs();
+            GetPosition?.Invoke(this, eData);
+            return eData.Position;
         }
     }
 }

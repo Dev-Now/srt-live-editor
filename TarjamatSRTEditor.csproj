@@ -56,10 +56,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SrtEditPageVM.cs" />
     <Compile Include="SubtitlingModels\SrtFileParser.cs" />
     <Compile Include="SubtitlingModels\Subtitle.cs" />
     <Compile Include="SubtitlingModels\SubtitleList.cs" />
     <Compile Include="SubtitlingModels\SubtitlingModel.cs" />
+    <Compile Include="SubtitlingVM.cs" />
     <Compile Include="TarSRTEditorEditPage.xaml.cs">
       <DependentUpon>TarSRTEditorEditPage.xaml</DependentUpon>
     </Compile>
