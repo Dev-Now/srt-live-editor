@@ -13,6 +13,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
@@ -20,6 +21,7 @@
                Width="50" BorderThickness="1" BorderBrush="LightGray"
                FontSize="18" TextBlock.TextAlignment="Center"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <!--make the content here bindable-->
             125
         </Label>
         <ComboBox Grid.Column="1" Background="Transparent"
@@ -38,5 +40,40 @@
                 </StackPanel>
             </ComboBoxItem>
         </ComboBox>
+        <TextBox Grid.Column="2" Background="Transparent"
+                 Name="StartTime"
+                 FontSize="18" TextBlock.TextAlignment="Center"
+                 Width="100" BorderThickness="1" BorderBrush="LightGray"
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <!--make content here bindable-->
+            00:000.00
+        </TextBox>
+        <TextBox Grid.Column="3" Background="Transparent" BorderBrush="Transparent"
+                 Name="Subtitle"
+                 FontSize="18" FontFamily="Amiri"
+                 FlowDirection="LeftToRight"
+                 HorizontalAlignment="Stretch"
+                 VerticalContentAlignment="Center">
+            <!--make the content here bindable-->
+            <!--make the FlowDirection here bindable-->
+            The subtitle goes here...
+        </TextBox>
+        <Label Grid.Column="4" Background="Transparent" Foreground="Red"
+               Name="Caution"
+               FontSize="18" FontWeight="ExtraBold" TextBlock.TextAlignment="Center"
+               Width="40"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <!--make the Visibility here bindable-->
+            !
+        </Label>
+        <TextBox Grid.Column="5" Background="Transparent"
+                 Name="EndTime"
+                 FontSize="18" TextBlock.TextAlignment="Center"
+                 Width="100" BorderThickness="1" BorderBrush="LightGray"
+                 HorizontalAlignment="Right"
+                 HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <!--make content here bindable-->
+            00:000.00
+        </TextBox>
     </Grid>
 </UserControl>

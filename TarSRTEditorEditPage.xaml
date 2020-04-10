@@ -127,11 +127,12 @@
                           CanContentScroll="False">
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
                     <local:SubtitleBlock></local:SubtitleBlock>
-                    <TextBox FontSize="18">Subtitle 1 go here...</TextBox>
-                    <TextBox FontSize="18">Subtitle 2 go here...</TextBox>
-                    <TextBox FontSize="18">Subtitle 3 go here...</TextBox>
-                    <TextBox FontSize="18">Subtitle 4 go here...</TextBox>
-                    <TextBox FontSize="18">Subtitle 5 go here...</TextBox>
+                    <local:SubtitleBlock></local:SubtitleBlock>
+                    <local:SubtitleBlock></local:SubtitleBlock>
+                    <local:SubtitleBlock></local:SubtitleBlock>
+                    <local:SubtitleBlock></local:SubtitleBlock>
+                    <local:SubtitleBlock></local:SubtitleBlock>
+                    <local:SubtitleBlock></local:SubtitleBlock>
                     <!--todo:my Subtitle block control should go here...-->
                 </StackPanel>
             </ScrollViewer>
