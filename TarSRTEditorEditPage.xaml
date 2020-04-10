@@ -126,6 +126,7 @@
                           VerticalScrollBarVisibility="Auto"
                           CanContentScroll="False">
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                    <local:SubtitleBlock></local:SubtitleBlock>
                     <TextBox FontSize="18">Subtitle 1 go here...</TextBox>
                     <TextBox FontSize="18">Subtitle 2 go here...</TextBox>
                     <TextBox FontSize="18">Subtitle 3 go here...</TextBox>
