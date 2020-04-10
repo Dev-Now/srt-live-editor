@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <!-- Help Section -->
         <Label Grid.Column="0" Grid.Row="0"
@@ -115,9 +115,7 @@
             <!--todo:define controls here...-->
         </Grid>
         <!-- Subtitling Section -->
-        <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
-                   
-                   >
+        <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
             <Label DockPanel.Dock="Top" 
                    HorizontalContentAlignment="Center" 
                    Background="LightBlue"
@@ -125,6 +123,7 @@
                 Subtitles</Label>
             <ScrollViewer DockPanel.Dock="Top" 
                           HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto"
                           CanContentScroll="False">
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
                     <TextBox FontSize="18">Subtitle 1 go here...</TextBox>
