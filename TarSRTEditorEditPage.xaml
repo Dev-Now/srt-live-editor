@@ -12,73 +12,129 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <!--video section-->
-        <MediaElement x:Name="VideoEl" LoadedBehavior="Manual"
-                      Width="700" Height="400"
-                      VerticalAlignment="Bottom"
-                      Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" 
-                      Source="{Binding VideoCtrlsVM.VideoSource}" 
-                      MediaOpened="Init_Video_Position_Ctrls" MediaEnded="Reset_Video"
-                      ></MediaElement>
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="Transparent"
-               Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
-               Margin="0,0,0,5"
-               VerticalAlignment="Bottom"
-               HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-               >
-            <Grid Margin="-5,-5,-5,-5">
-                <Label Background="Black" Opacity="0.6"
-                       Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
-                       Visibility="{Binding SubtitlingVM.SubtitleLblVisible, Mode=OneWay}"
-                       />
-                <Label Background="Transparent" Foreground="White" Opacity="1"
-                       FontFamily="Amiri" FontSize="18"
-                       FlowDirection="RightToLeft"
-                       TextBlock.TextAlignment="Center"
-                       Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
-                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                       Content="{Binding SubtitlingVM.SubtitleLblContent, Mode=OneWay}"
-                       Visibility="{Binding SubtitlingVM.SubtitleLblVisible, Mode=OneWay}"
-                       />
-            </Grid>
+        <!-- Help Section -->
+        <Label Grid.Column="0" Grid.Row="0"
+               Background="LightYellow"
+               Height="430" Width="500"
+               FontSize="18">
+            <TextBlock>
+                * Useful shortcuts<LineBreak/>
+                * Helpful tips<LineBreak/>
+                <LineBreak/>
+                this is static content...
+            </TextBlock>
         </Label>
-        <!-- video controls -->
-        <Button Grid.Column="0" Grid.Row="1" x:Name="PlayCtrl"
-                Content="{Binding VideoCtrlsVM.PlayCtrlContent}" 
-                IsEnabled="{Binding VideoCtrlsVM.PlayCtrlEnabled, Mode=OneWay}" 
-                Command="{Binding VideoCtrlsVM.PlayPauseBtnClick, Mode=OneWay}"
-                />
-        <Button Grid.Column="1" Grid.Row="1" Name="ResetCtrl" 
-                IsEnabled="{Binding VideoCtrlsVM.ResetCtrlEnabled, Mode=OneWay}" 
-                Command="{Binding VideoCtrlsVM.ResetBtnClick, Mode=OneWay}"
-                >Reset</Button>
-        <Grid Grid.Column="2" Grid.Row="1" Background="AntiqueWhite">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" x:Name="VideoPositionLbl"
-                   Content="{Binding VideoCtrlsVM.VideoPositionLblContent, Mode=OneWay}"/>
-            <Slider Grid.Column="1" Width="500" Name="VideoPositionSlider"
-                    VerticalAlignment="Center"
-                    IsMoveToPointEnabled="True"
-                    Minimum="0" Maximum="{Binding VideoCtrlsVM.VideoPositionSldrMax, Mode=OneWay}" 
-                    IsEnabled="{Binding VideoCtrlsVM.VideoPositionSldrEnabled, Mode=OneWay}" 
-                    Value="{Binding VideoCtrlsVM.VideoPositionSldrValue}"
-                    Thumb.DragStarted="VideoEl_TogglePositionUpdate" Thumb.DragCompleted="VideoEl_TogglePositionUpdate"
-                    ></Slider>
-            <Label Grid.Column="2" x:Name="VideoSpanLbl"
-                   Content="{Binding VideoCtrlsVM.VideoSpanLblContent, Mode=OneWay}"/>
+        <!-- Video Section -->
+        <Grid Grid.Column="1" Grid.Row="0"
+              Height="430" Width="700">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <!-- Video Display -->
+            <Grid Grid.Row="0">
+                <MediaElement x:Name="VideoEl" LoadedBehavior="Manual"
+                              Height="400"
+                              VerticalAlignment="Bottom"
+                              Source="{Binding VideoCtrlsVM.VideoSource}" 
+                              MediaOpened="Init_Video_Position_Ctrls" MediaEnded="Reset_Video"
+                              ></MediaElement>
+                <Label Background="Transparent"
+                       Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
+                       Margin="0,0,0,5"
+                       VerticalAlignment="Bottom"
+                       HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                       >
+                    <Grid Margin="-5,-5,-5,-5">
+                        <Label Background="Black" Opacity="0.6"
+                               Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
+                               Visibility="{Binding SubtitlingVM.SubtitleLblVisible, Mode=OneWay}"
+                               />
+                        <Label Background="Transparent" Foreground="White" Opacity="1"
+                               FontFamily="Amiri" FontSize="18"
+                               FlowDirection="RightToLeft"
+                               TextBlock.TextAlignment="Center"
+                               Height="{Binding SubtitlingVM.SubtitleLblHeight, Mode=OneWay}" Width="{Binding SubtitlingVM.SubtitleLblWidth, Mode=OneWay}"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{Binding SubtitlingVM.SubtitleLblContent, Mode=OneWay}"
+                               Visibility="{Binding SubtitlingVM.SubtitleLblVisible, Mode=OneWay}"
+                               />
+                    </Grid>
+                </Label>
+            </Grid>
+            <!-- Video Controls -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="PlayCtrl"
+                        MinWidth="40" MinHeight="30"
+                        FontWeight="Bold"
+                        Content="{Binding VideoCtrlsVM.PlayCtrlContent}" 
+                        IsEnabled="{Binding VideoCtrlsVM.PlayCtrlEnabled, Mode=OneWay}" 
+                        Command="{Binding VideoCtrlsVM.PlayPauseBtnClick, Mode=OneWay}"
+                        />
+                <Button Grid.Column="1" Name="ResetCtrl" 
+                        MinWidth="40"
+                        FontWeight="Bold"
+                        IsEnabled="{Binding VideoCtrlsVM.ResetCtrlEnabled, Mode=OneWay}" 
+                        Command="{Binding VideoCtrlsVM.ResetBtnClick, Mode=OneWay}"
+                        >Reset</Button>
+                <!-- Seek Bar -->
+                <Grid Grid.Column="2" Background="AntiqueWhite">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" x:Name="VideoPositionLbl"
+                           Content="{Binding VideoCtrlsVM.VideoPositionLblContent, Mode=OneWay}"/>
+                    <Slider Grid.Column="1" MinWidth="500" Name="VideoPositionSlider"
+                            VerticalAlignment="Center"
+                            IsMoveToPointEnabled="True"
+                            Minimum="0" Maximum="{Binding VideoCtrlsVM.VideoPositionSldrMax, Mode=OneWay}" 
+                            IsEnabled="{Binding VideoCtrlsVM.VideoPositionSldrEnabled, Mode=OneWay}" 
+                            Value="{Binding VideoCtrlsVM.VideoPositionSldrValue}"
+                            Thumb.DragStarted="VideoEl_TogglePositionUpdate" Thumb.DragCompleted="VideoEl_TogglePositionUpdate"
+                            ></Slider>
+                    <Label Grid.Column="2" x:Name="VideoSpanLbl"
+                           Content="{Binding VideoCtrlsVM.VideoSpanLblContent, Mode=OneWay}"/>
+                </Grid>
+            </Grid>
         </Grid>
-        <!-- subtitles panel -->
-        <TextBox Grid.Column="3" Grid.Row="0">Subtitles go here...</TextBox>
+        <!-- Review Section -->
+        <Grid Grid.Column="2" Grid.Row="0">
+            <!--todo:define controls here...-->
+        </Grid>
+        <!-- Subtitling Section -->
+        <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"
+                   
+                   >
+            <Label DockPanel.Dock="Top" 
+                   HorizontalContentAlignment="Center" 
+                   Background="LightBlue"
+                   FontWeight="Heavy" FontSize="20">
+                Subtitles</Label>
+            <ScrollViewer DockPanel.Dock="Top" 
+                          HorizontalScrollBarVisibility="Disabled"
+                          CanContentScroll="False">
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                    <TextBox FontSize="18">Subtitle 1 go here...</TextBox>
+                    <TextBox FontSize="18">Subtitle 2 go here...</TextBox>
+                    <TextBox FontSize="18">Subtitle 3 go here...</TextBox>
+                    <TextBox FontSize="18">Subtitle 4 go here...</TextBox>
+                    <TextBox FontSize="18">Subtitle 5 go here...</TextBox>
+                    <!--todo:my Subtitle block control should go here...-->
+                </StackPanel>
+            </ScrollViewer>
+        </DockPanel>
     </Grid>
 </Page>
