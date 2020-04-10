@@ -31,7 +31,7 @@ namespace SubtitlingViewModel
         #region Subtitle Label
         private string _szCurrentSubtitle = "";
         private float _fLineHeight = 41f;
-        private float _fLineWidth = 6.5f;
+        private float _fLineWidth = 7f;
         public string SubtitleLblContent
         {
             get
@@ -62,7 +62,7 @@ namespace SubtitlingViewModel
         {
             get
             {
-                return Convert.ToUInt32(_szCurrentSubtitle.Split('\n').Max(line => line.Length) * _fLineWidth);
+                return Math.Max(Convert.ToUInt32(_szCurrentSubtitle.Split('\n').Max(line => line.Length) * _fLineWidth), 50);
             }
         }
         #endregion
