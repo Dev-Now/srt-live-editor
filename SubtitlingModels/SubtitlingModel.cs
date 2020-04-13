@@ -31,11 +31,7 @@ namespace TarjamatSRTEditor.SubtitlingModels
 
         public string GetSubtitleAt(TimeSpan ts)
         {
-            foreach (Subtitle sub in sblOutpSubtitles)
-            {
-                if ((ts >= sub.StartTime) && (ts <= sub.EndTime)) return sub.Text;
-            }
-            return "";
+            return sblOutpSubtitles.GetSubtitleAt(ts);
         }
 
         public bool IsThereSubtitleAt(TimeSpan ts)

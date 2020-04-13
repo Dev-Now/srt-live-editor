@@ -32,5 +32,11 @@ namespace TarjamatSRTEditor.SubtitlingModels
             subCopy.EndTime = new TimeSpan(this.EndTime.Ticks);
             return subCopy;
         }
+
+        public bool IsSubtitleShowingAt(TimeSpan ts)
+        {
+            if ((ts >= StartTime) && (ts <= EndTime)) return true;
+            else return false;
+        }
     }
 }
