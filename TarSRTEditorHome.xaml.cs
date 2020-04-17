@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace TarjamatSRTEditor
 {
@@ -31,12 +32,12 @@ namespace TarjamatSRTEditor
 
         private void Browse_Dialog(object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
             string senderName = ((Button)sender).Name;
             ofd.Filter = (senderName == "VideoFileBrowseBtn")?
                 "Video files (*.mp4)|*.mp4|Video files (*.wmv)|*.wmv|Video files (*.wav)|*.wav|Video files (*.ogg)|*.ogg":
                 "Subtitles files (*.srt)|*.srt";
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (ofd.ShowDialog() == true)
             {
                 if(senderName == "VideoFileBrowseBtn")
                 {
